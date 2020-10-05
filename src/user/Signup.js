@@ -1,9 +1,11 @@
 import React from 'react';
+import Layout from '../core/Layout'
 
 const Signup=()=>(
-    <div>
-   Signup
-    </div>
+    <Layout title="Signin" description="Signup ecomm">
+        ...
+    </Layout>
 )
+
 
 export default Signup;

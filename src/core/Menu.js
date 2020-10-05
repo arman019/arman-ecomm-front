@@ -10,7 +10,9 @@ const isActive = (history, path) => {
 };
 
 
-const Menu = ({history})=> (  
+const Menu = ({history})=>{
+    
+    return(  
         <div>
         <ul className="nav nav-tabs bg-primary">
             <li className="nav-item">
@@ -45,6 +47,7 @@ const Menu = ({history})=> (
             </ul>
         </div>
         )
+    }
     
 
 
