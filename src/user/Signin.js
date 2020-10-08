@@ -98,13 +98,17 @@ const blurChange=(name)=>(event)=>{
 
     const redirectUser=()=>{
         if(redirectToReferrer){
-            if(user && user.role ===1 ){
+            if(user && user.role === 1 ){
                 return <Redirect to="/admin/dashboard" />
             }
-            else{
+            if(user && user.role === 0 ){
 
                 return <Redirect to="/user/dashboard" />
             }
+        }
+
+        if(isAuthenticate()){
+            return (<Redirect to="/"/>)
         }
     }        
 

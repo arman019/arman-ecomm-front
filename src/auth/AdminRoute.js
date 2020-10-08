@@ -3,13 +3,13 @@ import {Route, Redirect} from 'react-router-dom';
 import { isAuthenticate } from '.';
 
 
-const PrivateRoute = ({component: Component,...rest}) =>(
+const AdminRoute = ({component: Component,...rest}) =>(
 
-    <Route {...rest} render={props => isAuthenticate()  ? (
+    <Route {...rest} render={props => isAuthenticate() && isAuthenticate().user.role=== 1 ? (
         <Component {...props} />
     ):(
         <Redirect to={{pathname:'/signin', state:{from:props.location }}} />
     )} />
 )
 
-export default PrivateRoute;
+export default AdminRoute;
