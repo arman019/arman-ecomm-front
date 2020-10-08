@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link ,withRouter} from 'react-router-dom';
-import {signout, isAuthenticate}from '../auth/index'
+import {signout, isAuthenticate}from '../auth/index';
+
 
 const isActive = (history, path) => {
     if (history.location.pathname === path) {
@@ -23,6 +24,17 @@ const Menu = ({history})=>{
                     to="/"
                 >
                     Home
+                </Link>
+            </li>
+
+            <li className="nav-item">
+                <Link
+                    className="nav-link"
+                    style={isActive(history, "/dashboard")}
+                    to="/dashboard"
+                >
+                    
+                    DASHBOARD
                 </Link>
             </li>
 
