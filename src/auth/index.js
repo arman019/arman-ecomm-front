@@ -47,4 +47,22 @@ export const authenticate =(data,next)=>{
         localStorage.setItem('jwt', JSON.stringify(data)) //setting data at local storage with the key 'jwt'
         next();
     }
-} 
+};
+
+export const signout = (next) =>{
+
+    if(typeof window !=='undefined'){
+        localStorage.removeItem('jwt') //setting data at local storage with the key 'jwt'
+        next();
+
+    return fetch(`${API}/signout`, {
+            method:"GET",
+        })
+        .then((resp)=>{
+            return resp.json()
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
+}
