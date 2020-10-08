@@ -1,7 +1,8 @@
 import React ,{useState} from 'react';
 import {Redirect} from 'react-router-dom';
 import Layout from '../core/Layout'
-import {signin,authenticate} from '../auth/index'
+import {signin,authenticate,isAuthenticate} from '../auth/index';
+
 
 const Signin=()=>{  
     const [values, setValues] = useState({
@@ -14,6 +15,8 @@ const Signin=()=>{
 
 
     const { email, password, loading, error,redirectToReferrer } = values;
+
+    const {user} = isAuthenticate();
 
 
     const handleChange = name => event => {
@@ -95,7 +98,13 @@ const blurChange=(name)=>(event)=>{
 
     const redirectUser=()=>{
         if(redirectToReferrer){
-        return <Redirect to="/" />
+            if(user && user.role ===1 ){
+                return <Redirect to="/admin/dashboard" />
+            }
+            else{
+
+                return <Redirect to="/user/dashboard" />
+            }
         }
     }        
 
