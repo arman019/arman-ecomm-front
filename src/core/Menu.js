@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link ,withRouter} from 'react-router-dom';
-import {signout}from '../auth/index'
+import {signout, isAuthenticate}from '../auth/index'
 
 const isActive = (history, path) => {
     if (history.location.pathname === path) {
@@ -26,6 +26,10 @@ const Menu = ({history})=>{
                 </Link>
             </li>
 
+        {!isAuthenticate() && (
+
+        <>
+
             <li className="nav-item">
                 <Link
                     className="nav-link"
@@ -46,12 +50,17 @@ const Menu = ({history})=>{
                 </Link>
             </li>
 
-            <li className="nav-item">
+        </>
+        )}
+
+            {isAuthenticate() &&(
+                <>
+                <li className="nav-item">
                 <span
                     className="nav-link"
-                    style={{cursor :'pointer', color:'#ffffff'}}
+                    style={{cursor:'pointer', color:'#ffffff'}}
                     onClick={()=>{
-                        
+
                         signout(()=>{
                             history.push('/')
                         })
@@ -60,6 +69,9 @@ const Menu = ({history})=>{
                     SIGNOUT
                 </span>
             </li>
+                </>
+            )}
+
             </ul>
         </div>
         )

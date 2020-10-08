@@ -65,4 +65,20 @@ export const signout = (next) =>{
             console.log(err);
         })
     }
+};
+
+export const isAuthenticate = ()=>{
+    if(typeof window ==='undefined'){
+        return false;
+    }
+
+    if(localStorage.getItem('jwt')){
+        return JSON.parse(localStorage.getItem('jwt'))
+    }
+    else{
+        return false;
+    }
+    
+
+
 }
