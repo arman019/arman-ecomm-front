@@ -25,7 +25,11 @@ const Shop = ()=>{
 
     useEffect(()=>{
         init();
-    },[])
+    },[]);
+
+    const handleFilters = (filters,filterBy)=>{
+        console.log("Shop",filters, filterBy)
+    }
     
     
 return (
@@ -36,11 +40,10 @@ return (
     >
         <div className="row">
             <div className="col-4">
-                <h3>Categories</h3>
+                <h3>Filtered By Categories</h3>
                 <ul>
-                <CheckBox categories={categories} />
-                </ul> 
-               
+                <CheckBox categories={categories}  handleFilters={filters=>handleFilters(filters,'category')}/>
+                </ul>                
             </div>
 
             <div className="col-8"> Right </div>       
