@@ -57,7 +57,7 @@ const init = () =>{
                 });
         }
     })
-}
+};
 
 useEffect(() => {
     init();
