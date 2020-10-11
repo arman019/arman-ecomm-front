@@ -9,6 +9,7 @@ const {user:{_id,name,email,role}}=isAuthenticate();
 
 const adminLinks = () => {
     return (
+        <div className="col-12 col-md-4 mb-2 mt-4" >
         <div className="card">
             <h4 className="card-header">Admin Links</h4>
             <ul className="list-group">
@@ -24,11 +25,13 @@ const adminLinks = () => {
                 </li>
             </ul>
         </div>
+        </div>
     );
 };
 
 const adminInfo = () => {
     return (
+        <div className="col-12 col-md-6 mb-2 mt-4" >
         <div className="card mb-5">
             <h3 className="card-header">Admin Information</h3>
             <ul className="list-group">
@@ -38,6 +41,7 @@ const adminInfo = () => {
                     {role === 1 ? "Admin" : "Registered User"}
                 </li>
             </ul>
+        </div>
         </div>
     );
 };
@@ -49,18 +53,15 @@ const adminInfo = () => {
     <Layout
     title="Dashboard"
     description={`hello ${name}`}
-    className="container" 
+   
     >
-        <div className="row ">
-            <div className="col-3 mr-auto">
-                {adminLinks()}
-            </div>
-
-            <div className="col-9 ml-auto">
-                {adminInfo()}
-            </div>
-            
+    <div  className="container" >
+        <div className="row ">          
+            {adminLinks()}          
+            {adminInfo()}
         </div>
+    </div>
+        
     
             
     </Layout>
