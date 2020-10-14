@@ -48,17 +48,14 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
 
 
 
-export const list = (params) => {
-
+export const list = params => {
   const query = queryString.stringify(params);
-  console.log(query);
-  return fetch(`${API}/products?${query}`, {
-    method: "GET",
+  console.log("query", query);
+  return fetch(`${API}/products/search?${query}`, {
+      method: "GET"
   })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      console.log("err in getProducts " + err);
-    });
+      .then(response => {
+          return response.json();
+      })
+      .catch(err => console.log(err));
 };

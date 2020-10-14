@@ -97,11 +97,13 @@ const  loadFilteredResult =newFilters =>{
     getFilteredProducts(skip,limit,newFilters)
     .then((data) =>{
         if(data.error){           
-            setError(data.error);           
+            setError(data.error);   
+            setLoading(false);        
         }
         else{
             setFilteredResult(data.data);
-            setSize(data.size);          
+            setSize(data.size); 
+            setLoading(false);         
         }
     })
     .catch((error)=>{
@@ -180,28 +182,17 @@ return (
 
                 <div className="row">
                 {showLoading()}
-                {filteredResult.map((product, i) => (
-                           
-                                <Cards key={i} product={product} />
-                                
-                            
+                {filteredResult.map((product, i) => (                          
+                    <Cards key={i} product={product} />                                                            
                         ))}
 
-                </div>
-            
-            </div>
-           
+                </div>           
+            </div>          
         </div>
         <div className="row offset-7">
         
                 {loadmoreButton()}
-            
-
         </div>
-      
-       
-
-
     </Layout>
 );
 
