@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import Cards from "./Cards";
-import { getCategories } from "./apiCore";
+import { getCategories,getFilteredProducts } from "./apiCore";
 import CheckBox from './CheckBox';
 import {prices} from './fixedPrices';
 import RadioBox from './RadioBox'
@@ -17,28 +17,44 @@ const Shop = ()=>{
     }); 
     const [categories, setCategories]=useState([]);
     const [error, setError]=useState(false);
+    const [limit, setLimit]=useState(6);
+    const [skip, setSkip]=useState(0);
+    const [filteredResult, setFilteredResult]=useState([]);
+    const [loading,setLoading]=useState(false);
+    const [size, setSize]=useState(0);
 
-    const init = () =>{
-        getCategories()
-        .then((data) =>{
-            if(data.error){
-            setError(data.error)
-            }
     
+
+    const init = () =>{  
+        setLoading(true)
+        getCategories()       
+        .then((data) =>{     
+            if(data.error){
+                setError(data.error)
+                setLoading(false)
+
+                
+            }
             else{
                 setCategories(data)
+                setLoading(false)
             }
         })
     };
+    console.log({error})
 
     useEffect(()=>{
         init();
+        loadFilteredResult(skip,limit,myFilters.filters)
     },[]);
 
+    
+    
 
 
     const handleFilters = (filters,filterBy)=>{
        // console.log("Shop",filters, filterBy)
+      
     const newFilters = {...myFilters};
     newFilters.filters[filterBy] = filters;
         if(filterBy == "price"){
@@ -46,7 +62,9 @@ const Shop = ()=>{
             newFilters.filters[filterBy] = priceValues;
         }
 
-    setMyFilters(newFilters);
+        loadFilteredResult(myFilters.filters);
+        setMyFilters(newFilters);
+      
     };
     
     const handlePrice = (value) =>{
@@ -57,36 +75,131 @@ const Shop = ()=>{
         for(let i =0 ;  i< data.length ; i++ ){
             if(data[i]._id === parseInt( value)){
                 console.log(data[i].array)
-                testarray.push(data[i].array);
+                testarray=(data[i].array);
             }
         }
-    return testarray;        
-    }
+    return testarray;  
+    
+    // const data = prices;
+    // let array = [];
+
+    // for (let key in data) {
+    //     if (data[key]._id === parseInt(value)) {
+    //         array = data[key].array;
+    //     }
+    // }
+    // return array;
+
+}
+
+const  loadFilteredResult =newFilters =>{
+    setLoading(true);
+    getFilteredProducts(skip,limit,newFilters)
+    .then((data) =>{
+        if(data.error){           
+            setError(data.error);           
+        }
+        else{
+            setFilteredResult(data.data);
+            setSize(data.size);          
+        }
+    })
+    .catch((error)=>{
+        setError(error)
+    })
+};
+
+
+const  loadMore =() =>{
+    setLoading(true);
+    let toSkip = skip+limit;
+
+    getFilteredProducts(toSkip,limit,myFilters.filters)
+    .then((data) =>{
+        if(data.error){           
+            setError(data.error);
+        }
+        else{
+            setFilteredResult([...filteredResult,...data.data]);
+            setSize(data.size);
+            setSkip(toSkip);
+            setLoading(false);
+        }
+    })
+    .catch((error)=>{
+        setError(error)
+    })
+};
+
+const loadmoreButton=()=>{
+    return(
+        size>0 && size>= limit && (
+            <button onClick={loadMore  } className="btn btn-warning mb -5 btn-lg" >Load More</button>
+        )
+    )
+
+}
+
+
+const showLoading = () => (
+    loading && (
+    <div className="col-12">
+        <span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"></span>
+        <p>Loading... </p>
+    </div>
+    )
+);
+
     
 return (
     <Layout
         title="Shop Page"
         description="Search and find books of your choice"
         className="container-fluid"
-    >
+    >     
         <div className="row">
-            <div className="col-4">
-                <h4>Filtered By Categories</h4>
-                <ul>
-                <CheckBox categories={categories}  handleFilters={filters=>handleFilters(filters,'category')}/>
+            <div className="col-4">             
+                <h4 className="m-auto">Filtered By Categories</h4>
+                {error}
+                <ul>              
+                <CheckBox categories={categories}  handleFilters={filters=>handleFilters(filters,'category')} />
                 </ul>  
 
-                <h4>Filtered By Price </h4>
+                <h4>Filtered By Price </h4>             
                 <div>
+                {showLoading()}
                     <RadioBox prices={prices}  handleFilters={filters=>handleFilters(filters,'price')}/>
                 </div>                
             </div>
 
             <div className="col-8">
-                {JSON.stringify(myFilters)} 
-            </div>       
+            <span className="fa fa-lg">
+            <i className="fa fa-info"></i> 
+            <> Filtered Products : {filteredResult.length }</>         
+            </span>         
+
+                <div className="row">
+                {showLoading()}
+                {filteredResult.map((product, i) => (
+                           
+                                <Cards key={i} product={product} />
+                                
+                            
+                        ))}
+
+                </div>
+            
+            </div>
+           
+        </div>
+        <div className="row offset-7">
+        
+                {loadmoreButton()}
+            
 
         </div>
+      
+       
 
 
     </Layout>

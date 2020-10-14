@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 
 const CheckBox = ({ categories, handleFilters }) => {
   const [checked, setChecked] = useState([]);
+ 
 
+  
   const handleToggle = (c) => () => {
     const currentCategoryId = checked.indexOf(c);
     const newCheckedCategoryId = [...checked];
