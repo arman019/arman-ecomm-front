@@ -5,7 +5,7 @@ import Cards from "./Cards";
 import { getCategories,getFilteredProducts } from "./apiCore";
 import CheckBox from './CheckBox';
 import {prices} from './fixedPrices';
-import RadioBox from './RadioBox'
+import RadioBox from './RadioBox';
 
 
 const Shop = ()=>{

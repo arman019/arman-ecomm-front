@@ -6,6 +6,8 @@ import { Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle} from 'reactstrap';
     import { API } from "../config";
 
+import Search from './Search'
+ 
 
 const Home=()=>
   { 
@@ -81,13 +83,13 @@ const Home=()=>
                 <Card key={i} product={product} />
             ))}
         </div> */}
+        <Search />
 
-    <div className="container m-auto">     
-            
+        <div className="container m-auto">   
             <h2 className="mb-4">New Arrivals</h2>
-            <div className="row">             
+            <div className="row"> 
                 {productByArrival.map((product, i) => (
-               <Cards key={i} product={product} />  
+            <Cards key={i} product={product} />  
                //abtImage({item:product,url:"product"})
                 ))}                 
             </div> 
