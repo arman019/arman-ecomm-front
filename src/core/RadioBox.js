@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-const RadioBox = ({ prices,handleFilters }) => {
+const RadioBox = ({ prices, handleFilters }) => {
     const [value, setValue] = useState(0);
 
-    const handleChange = (event) =>{     
+    const handleChange = (event) => {
         handleFilters(event.target.value);
         setValue(event.target.value);
     }
@@ -16,7 +16,7 @@ const RadioBox = ({ prices,handleFilters }) => {
                 className="mr-2 mr-4"
                 value={`${price._id}`}
                 name={price}
-               
+
             />
             <label className="form-check-label">{price.name} </label>
         </div>

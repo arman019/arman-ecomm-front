@@ -5,6 +5,7 @@ import { API } from "../config";
 
 const ShowImage = ({ item, url }) => (
     <div className="product-img col-12 col-md">
+       
         <img
             src={`${API}/${url}/photo/${item._id}`}
             alt={item.name}
