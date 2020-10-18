@@ -77,7 +77,7 @@ const Product = (props) => {
 
   
     const shouldRedirect = (redirect) => {
-        console.log("red ",redirect)
+       
         if (redirect) {
           return <Redirect to="/cart" />;
         }
