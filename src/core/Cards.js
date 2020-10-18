@@ -20,7 +20,7 @@ const [redirect, setRedirect] = useState(false);
         return (
         showViewProductButton && (     
             <Link  to={`/product/${product._id}`} className="mr-1">
-            <button className="btn btn-outline-primary mt-2 mb-2 card-btn-1">View Product</button>
+            <button className="btn btn-outline-primary mt-2 ">View Product</button>
             </Link>  
             
         )
@@ -111,7 +111,7 @@ const showCartUpdateOptions = cartUpdate => {
             </div>
 
                 <div className="row">
-                    <div className="col-12  ">
+                    <div className="col-12 ">
                         <h4 className=" d-none d-sm-block card-text ml-2">Description: </h4>
                         <p className="d-none d-sm-block card-text ml-2">{product.description.substring(0, 10)}</p>
                         <h4 className=" card-text ml-2">Price: </h4>

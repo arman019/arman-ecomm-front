@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Layout from './Layout';
 import { getCart } from './cartHelpers';
 import Cards from './Cards';
-
+import Checkout from './Checkout'
 
 const Cart = () => {
     const [items, setItems] = useState([]);
@@ -11,16 +11,17 @@ const Cart = () => {
     const [run, setRun] = useState(false);
 
     useEffect(() => {
-      
+
         setItems(getCart());
     }, [run]);
 
     const showItems = items => {
         return (
-            <div>
-                <h2>Your cart has {`${items.length}`} items</h2>
-                <hr />
+            <>
+
                 {items.map((product, i) => (
+
+
                     <Cards
                         key={i}
                         product={product}
@@ -29,10 +30,12 @@ const Cart = () => {
                         setRun={setRun}
                         run={run}
                         showRemoveProductButton={true}
-                            
+
                     />
+
+
                 ))}
-            </div>
+            </>
         );
     };
 
@@ -48,11 +51,24 @@ const Cart = () => {
             description="Manage your cart items. Add remove checkout or continue shopping."
             className="container-fluid"
         >
-       
-            <div className="row">
-                <div className="col col-md-8 ">{items.length > 0 ? showItems(items) : noItemsMessage()}</div>            
+<div className="container  justify-content-border">
+        <div className="row " >
+            <div className="col col-md-3 ml-2">
+                <Checkout products={items} />
+            </div>         
+
+            
+                <div className="row  mr-2 ">
+                    {items.length > 0 ? showItems(items) : noItemsMessage()}
+                </div>
             </div>
+</div>
         
+
+          
+
+
+
         </Layout>
     );
 };
