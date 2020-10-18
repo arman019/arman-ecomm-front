@@ -160,14 +160,12 @@ const Shop = () => {
             <div className="row">
                 <div className="col-4">
                     <h4 className="m-auto">Filtered By Categories</h4>
-
                     <ul>
                         <CheckBox categories={categories} handleFilters={filters => handleFilters(filters, 'category')} />
                     </ul>
 
                     <h4>Filtered By Price </h4>
-                    <div>
-                      
+                    <div>                     
                         <RadioBox prices={prices} handleFilters={filters => handleFilters(filters, 'price')} />
                     </div>
                 </div>
@@ -178,8 +176,7 @@ const Shop = () => {
                         <> Filtered Products : {filteredResult.length}</>
                     </span>
                         {showLoading()}
-                    <div className="row">
-                       
+                    <div className="row">                      
                         {filteredResult.map((product, i) => (
                             <Cards key={i} product={product} />
                         ))}

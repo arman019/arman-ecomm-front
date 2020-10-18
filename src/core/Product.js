@@ -3,15 +3,18 @@ import Layout from './Layout';
 import { read, listRelated } from './apiCore';
 import Cards from './Cards';
 import ShowImage from './ShowImage'
-import { Link } from "react-router-dom";
-import moment from 'moment'
+import { Redirect } from "react-router-dom";
+import moment from 'moment';
+import {addItem} from './cartHelpers'
+
 
 const Product = (props) => {
 
     const [product, setProduct] = useState({});
     const [relatedProduct, setRelatedProduct] = useState([]);
     const [errors, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false); 
+    const [redirect, setRedirect] = useState(false);
 
     const loadSingleProduct = productId => {
         setLoading(true);
@@ -65,6 +68,21 @@ const Product = (props) => {
         ) : (<span className="badge badge-primary badge-pill d-flex justify-content-center"> Out ofstock </span>)
     }
 
+
+    const addToCart = () => {
+        // console.log('added');
+        
+        addItem(product,()=>setRedirect(true));
+    };
+
+  
+    const shouldRedirect = (redirect) => {
+        console.log("red ",redirect)
+        if (redirect) {
+          return <Redirect to="/cart" />;
+        }
+      };
+
     const showAll = (product) => {
         return (
             
@@ -76,10 +94,13 @@ const Product = (props) => {
                             <div className="card-header d-flex justify-content-center  
                             bg-secondary text-white">
                                 {product.name} {showStock(product.quantity)}</div>
-
+                                    {shouldRedirect(redirect)}
                             <div className="card-body offset-2" style={{ height: "70%", width: "70%" }} >
                                 <ShowImage item={product} url="product" />
+                                <h4 className=" card-text ml-2"> Description: </h4>
+                            <p className=" card-text md-col-4 ml-2"> {product.description.substring(0,80)}</p>
                             </div>
+                            
 
                             {/* <div className="row">
                                 <div className="col-12 col-md-7 mb-2 mt-4 mr-auto  justify-content-center ">
@@ -99,7 +120,7 @@ const Product = (props) => {
                             <div className="row ">
 
                                 <div className=" col col-md  d-flex justify-content-center ">
-                                    <button className="btn btn-success mt-2 mb-2 ">
+                                    <button onClick={addToCart} className="btn btn-success mt-2 mb-2 ">
                                         Add to Cart
                                     </button>
                                 </div>
@@ -108,8 +129,6 @@ const Product = (props) => {
 
                     <div className="row">                    
                         <div className="card-body " style={{ height: "70%", width: "70%" }} >
-                            <h4 className=" card-text ml-2">Description: </h4>
-                            <p className=" card-text md-col-4 ml-2">{product.description.substring(0,80)}</p>
                             <h4 className=" card-text ml-2 ">Price: </h4>
                             <p className="card-text ml-2 black-9">${product.price}</p>
                             <h4 className=" card-text ml-2 ">Category: </h4>
@@ -140,7 +159,7 @@ const Product = (props) => {
                     <h3 className="mt-3">Related products :</h3>
                     <div className = "row">                      
                     {relatedProduct.map((p, i) => (                  
-                        <Cards key={i} product={p} />                                                  
+                        <Cards  key={i} product={p} />                                                  
                             ))}
                     </div>     
             </div>       
