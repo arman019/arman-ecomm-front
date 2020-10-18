@@ -20,8 +20,6 @@ const Cart = () => {
             <>
 
                 {items.map((product, i) => (
-
-
                     <Cards
                         key={i}
                         product={product}
@@ -40,7 +38,7 @@ const Cart = () => {
     };
 
     const noItemsMessage = () => (
-        <h2>
+        <h2 className="mt-4 offset-4">
             Your cart is empty. <br /> <Link to="/shop">Continue shopping</Link>
         </h2>
     );
@@ -51,21 +49,20 @@ const Cart = () => {
             description="Manage your cart items. Add remove checkout or continue shopping."
             className="container-fluid"
         >
-<div className="container  justify-content-border">
-        <div className="row " >
-            <div className="col col-md-3 ml-2">
-                <Checkout products={items} />
-            </div>         
+            <div className="container">
+                <div className="row " >
+                    <div className="col col-md-2 ">
+                        <Checkout products={items} />
+                    </div>
 
-            
-                <div className="row  mr-2 ">
-                    {items.length > 0 ? showItems(items) : noItemsMessage()}
+
+                    <div className="row col col-md-10  ">
+                        {items.length > 0 ? showItems(items) : noItemsMessage()}
+                    </div>
                 </div>
             </div>
-</div>
-        
 
-          
+
 
 
 
