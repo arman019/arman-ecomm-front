@@ -80,7 +80,7 @@ const Checkout = ({ products }) => {
 
                         emptyCart(() => {
                             console.log("emptied")
-                             setData({loading:false ,success:true});
+                            setData({loading:false ,success:true});
                         }
                         )
 
