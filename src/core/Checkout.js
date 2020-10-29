@@ -18,10 +18,17 @@ const Checkout = ({ products }) => {
     });
 
     let productQuantity = []
+    let InBuyproductQuantity = []
     products.map((item) => {
+        // console.log("item cont",item.count)
         if (item.quantity <= 0) {
-            // console.log("item",item.name)
+            // console.log("item cont",item.count)
             productQuantity.push(item.name)
+        }
+
+
+        if (item.count > item.quantity) {
+            InBuyproductQuantity.push(item.name)
         }
     });
 
@@ -74,6 +81,11 @@ const Checkout = ({ products }) => {
                     paymentMethodNonce: nonce
                 };
 
+                products.map((item) => {
+                    console.log("item in buy", item.quantity)
+                    //productQuantity.push(item.name)
+                });
+
                 processPayment(userId, token, paymentData)
                     .then((response) => {
                         console.log("sucess", response)
@@ -85,6 +97,10 @@ const Checkout = ({ products }) => {
                             amount: response.transaction.amount,
                             address: deliveryAddress
                         };
+
+
+
+
                         createOrder(userId, token, createOrderData)
 
                         emptyCart(() => {
@@ -92,6 +108,9 @@ const Checkout = ({ products }) => {
                             setData({ loading: false, success: true });
                         }
                         )
+
+
+
 
                     })
                     .catch((error) => {
@@ -114,6 +133,7 @@ const Checkout = ({ products }) => {
 
             isAuthenticate() ? (
                 <div className="col-12 mr-3  d-flex flex-column align-items-end px-3">
+
                     {showDropIn()}
 
                 </div>
@@ -134,6 +154,7 @@ const Checkout = ({ products }) => {
             {data.clientToken !== null && products.length > 0 ? (
                 <div className="row " >
                     {showSuccess(data.success)}
+
                     <span className=" d-flex flex-stretch text font align-self-center mb-2"
                         style={{ fontFamily: "Times New Roman", fontSize: "25px" }} > Total Item {itemTotal()}</span>
 
@@ -150,24 +171,31 @@ const Checkout = ({ products }) => {
                         />
                     </div>
 
-                {productQuantity.length > 0 ? (productOutOfstock(productQuantity)) :    
-                
-              ( <>
-                   <DropIn
-                        options={{
-                            authorization: data.clientToken
-                        }}
-                        onInstance={instance => (data.instance = instance)} //instance dropIn er builtin system where it shows what is the type of the payment card or paypal
-                    />
+                    {productQuantity.length > 0 ? (productOutOfstock(productQuantity)) :
 
-                    <button onClick={buy} className=" btn btn-success btn-block " >
-                        Checkout
+                        (<>
+
+                            {InBuyproductQuantity.length > 0 ? (AdditionalproductOutOfstock(InBuyproductQuantity)) :
+
+                                <>
+                                    <DropIn
+                                        options={{
+                                            authorization: data.clientToken
+                                        }}
+                                        onInstance={instance => (data.instance = instance)} //instance dropIn er builtin system where it shows what is the type of the payment card or paypal
+                                    />
+
+                                    <button onClick={buy} className=" btn btn-success btn-block " >
+                                        Checkout
                     </button>
-                    </>
-                    
-                    )
-                                
-                                }
+                                </>
+
+                            }
+                        </>
+
+                        )
+
+                    }
 
                 </div>
 
@@ -198,16 +226,36 @@ const Checkout = ({ products }) => {
         return (
             productQuantity.map((item, i) => (
                 <div className="row alert alert-danger" key={i}>
-               <p>The products below are out of stock , remove and try again </p> 
-                <div  >
-                  {item}
+                    <p>The products below are out of stock , remove and try again </p>
+                    <div  >
+                        {item}
+                    </div>
+
                 </div>
-               
-                </div>
-                
-            ) )
+
+            ))
         )
-    }
+    };
+
+
+    const AdditionalproductOutOfstock = (InBuyproductQuantity) => {
+        console.log("InBuyproductQuantity ", InBuyproductQuantity)
+        return (
+            InBuyproductQuantity.map((item, i) => (
+                <div className="row alert alert-danger" key={i}>
+                    <p>The number of product is unavailable in stock , </p>
+                    <div  >
+                        {item}
+                    </div>
+
+                </div>
+
+            ))
+        )
+    };
+
+
+
 
     return (
         <>
@@ -215,7 +263,8 @@ const Checkout = ({ products }) => {
 
                 {showLoading(data.loading)}
                 {showCheckout()}
-              
+
+
             </div>
 
 
