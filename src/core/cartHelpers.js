@@ -11,6 +11,7 @@ export const addItem = (item,next) =>{
             count:1
         })
 
+    
         cart = Array.from(new Set(cart.map((product)=>
         ( product._id
         )).map((id)=>{

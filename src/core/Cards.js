@@ -53,7 +53,7 @@ const [redirect, setRedirect] = useState(false);
 const showStock = (quantity)=>{
     return quantity > 0 ?(
         <span className="badge badge-primary badge-pill ml-2"> In stock </span>
-    ):(  <span className="badge badge-primary badge-pill d-flex justify-content-center"> Out ofstock </span>)
+    ):(  <span className="badge badge-primary badge-pill ml-2"> Out ofstock </span>)
 };
 
 /* ami count product quantity change korar jonno first a productid ke access kortesi then ami oi id te count pathaitesi 'updateItem' 

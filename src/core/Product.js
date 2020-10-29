@@ -65,7 +65,7 @@ const Product = (props) => {
     const showStock = (quantity) => {
         return quantity > 0 ? (
             <span className="badge badge-primary badge-pill ml-2 "> In stock </span>
-        ) : (<span className="badge badge-primary badge-pill d-flex justify-content-center"> Out ofstock </span>)
+        ) : (<span className="badge badge-primary badge-pill ml-2 "> Out ofstock </span>)
     }
 
 

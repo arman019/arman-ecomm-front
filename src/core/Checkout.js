@@ -17,6 +17,15 @@ const Checkout = ({ products }) => {
         address: ''
     });
 
+    let productQuantity = []
+    products.map((item) => {
+        if (item.quantity <= 0) {
+            // console.log("item",item.name)
+            productQuantity.push(item.name)
+        }
+    });
+
+    //console.log("productQuantity ",productQuantity.length)
 
     const userId = isAuthenticate() && isAuthenticate().user._id;
     const token = isAuthenticate() && isAuthenticate().token;
@@ -80,7 +89,7 @@ const Checkout = ({ products }) => {
 
                         emptyCart(() => {
                             console.log("emptied")
-                            setData({loading:false ,success:true});
+                            setData({ loading: false, success: true });
                         }
                         )
 
@@ -141,7 +150,10 @@ const Checkout = ({ products }) => {
                         />
                     </div>
 
-                    <DropIn
+                {productQuantity.length > 0 ? (productOutOfstock(productQuantity)) :    
+                
+              ( <>
+                   <DropIn
                         options={{
                             authorization: data.clientToken
                         }}
@@ -151,6 +163,11 @@ const Checkout = ({ products }) => {
                     <button onClick={buy} className=" btn btn-success btn-block " >
                         Checkout
                     </button>
+                    </>
+                    
+                    )
+                                
+                                }
 
                 </div>
 
@@ -175,12 +192,30 @@ const Checkout = ({ products }) => {
         )
     );
 
+
+    const productOutOfstock = (productQuantity) => {
+        console.log("productQuantity ", productQuantity)
+        return (
+            productQuantity.map((item, i) => (
+                <div className="row alert alert-danger" key={i}>
+               <p>The products below are out of stock , remove and try again </p> 
+                <div  >
+                  {item}
+                </div>
+               
+                </div>
+                
+            ) )
+        )
+    }
+
     return (
         <>
             <div className="row mt-3" >
 
                 {showLoading(data.loading)}
                 {showCheckout()}
+              
             </div>
 
 
