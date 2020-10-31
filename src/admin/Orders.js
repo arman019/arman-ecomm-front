@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../core/Layout';
 import { isAuthenticate } from '../auth'
 import { Link } from "react-router-dom";
-import { listOrders, getStatusValue } from "./apiAdmin";
+import { listOrders, getStatusValue,updateOrderStatus } from "./apiAdmin";
 import moment from 'moment'
 
 
@@ -78,11 +78,35 @@ const Orders = () => {
 
     };
 
-
-    const showStatus =()=>{
-        
+    const handleStatusChange=(e,orderId)=>{
+        updateOrderStatus(user._id,token,orderId,e.target.value)
+        .then((data)=>{
+            if(data.error){
+                console.log("error in handleStatusChange" ,data.error)
+            }
+            else{
+                //setStatusValues(data) // i dont need to setStatus because its already updating in the backend
+                loadOrders()
+            }
+        })
     }
 
+    const showStatus = o => (
+        <div className="form-group">
+            <h3 className="mark mb-4">Status: {o.status}</h3>
+            <select
+                className="form-control"
+                onChange={e => handleStatusChange(e, o._id)}
+            >
+                <option>Update Status</option>
+                {statusValues.map((status, index) => (
+                    <option key={index} value={status}>
+                        {status}
+                    </option>
+                ))}
+            </select>
+        </div>
+    );
     return (
 
         <Layout
