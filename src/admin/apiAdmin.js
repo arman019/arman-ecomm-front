@@ -50,18 +50,34 @@ export const getCategories = () =>{
 
 
 
-export const listOrders = (userId,token) =>{
-    return  fetch(`${API}/order/list/${userId}`, {
+export const listOrders = (userId, token) => {
+    return fetch(`${API}/order/list/${userId}`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
             Authorization: `Bearer ${token}`
         }
     })
-    .then((response)=>{
-        return response.json();
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+
+export const getStatusValue = (userId,token) => {
+    return fetch(`${API}/order/status-values/${userId}`, {
+        method: "GET",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization:`Bearer ${token}`
+        },
+        
     })
-    .catch(err => {
-        console.log(err);
-    });
+        .then(response => {
+            console.log(response)
+            return response.json();
+        })
+        .catch(err => console.log(err));
 };
