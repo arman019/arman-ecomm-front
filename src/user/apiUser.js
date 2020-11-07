@@ -1,6 +1,5 @@
 import { API } from "../config";
 
-
 export const read = (userId, token) => {
     return fetch(`${API}/user/${userId}`, {
         method: "GET",
@@ -24,30 +23,21 @@ export const update = (userId, token, user) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify(user)
     })
-        .then((response) => {
+        .then(response => {
             return response.json();
         })
-        .catch((err) => {
-            console.log(err);
-        });
+        .catch(err => console.log(err));
 };
 
-
 export const updateUser = (user, next) => {
-
-    if (typeof window !== 'undefined') {
-        if (localStorage.getItem('jwt')) {
-
-            let auth = JSON.parse(localStorage.getItem('jwt'));
-            console.log('at user jwt auth ', auth);
-
+    if (typeof window !== "undefined") {
+        if (localStorage.getItem("jwt")) {
+            let auth = JSON.parse(localStorage.getItem("jwt"));
             auth.user = user;
-
-            localStorage.setItem('jwt', JSON.stringify(auth))
+            localStorage.setItem("jwt", JSON.stringify(auth));
             next();
         }
     }
-}
-
+};
