@@ -13,6 +13,7 @@ import Shop from './core/Shop';
 import Product from './core/Product';
 import Cart from './core/Cart';
 import Orders from './admin/Orders';
+import Profile from './user/Profile'
 
 const Router = ()=>{
     return(
@@ -32,6 +33,7 @@ const Router = ()=>{
                 <Route path='/product/:productId' exact component={Product}/>
                 <Route path='/cart' exact component={Cart}/>
                 
+                <PrivateRoute path='/profile/:userId' exact component={Profile} />
             </Switch>
         </BrowserRouter>
     )
