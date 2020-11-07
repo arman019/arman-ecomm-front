@@ -1,7 +1,7 @@
 import { API } from "../config";
 
 
-export const listRelated = (userId,token) => {
+export const read = (userId, token) => {
     return fetch(`${API}/user/${userId}`, {
         method: "GET",
         headers: {
@@ -16,16 +16,16 @@ export const listRelated = (userId,token) => {
         .catch(err => console.log(err));
 };
 
-export const update = (userId,token,user) => {
+export const update = (userId, token, user) => {
     return fetch(`${API}/user/${userId}`, {
-            method: "PUT",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(user),
-        })
+        method: "PUT",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(user),
+    })
         .then((response) => {
             return response.json();
         })
@@ -35,17 +35,17 @@ export const update = (userId,token,user) => {
 };
 
 
-export const updateUser = (user , next)=>{
+export const updateUser = (user, next) => {
 
-    if(typeof window !== 'undefined'){
-        if(localStorage.getItem('jwt')){
+    if (typeof window !== 'undefined') {
+        if (localStorage.getItem('jwt')) {
 
-            let auth =JSON.parse(localStorage.getItem('jwt'));
-            console.log('at user jwt auth ',auth);
+            let auth = JSON.parse(localStorage.getItem('jwt'));
+            console.log('at user jwt auth ', auth);
 
             auth.user = user;
 
-            localStorage.setItem('jwt',JSON.stringify(auth))
+            localStorage.setItem('jwt', JSON.stringify(auth))
             next();
         }
     }
